@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javen.dao.MessageBoardInfoDao">
+  <resultMap id="BaseResultMap" type="com.javen.model.MessageBoardInfo">
+    <id column="message_info_id" jdbcType="INTEGER" property="messageInfoId" />
+    <result column="Message_tittle" jdbcType="VARCHAR" property="messageTittle" />
+    <result column="message_date" jdbcType="VARCHAR" property="messageDate" />
+    <result column="Message_accout" jdbcType="VARCHAR" property="messageAccout" />
+    <result column="Message_context" jdbcType="VARCHAR" property="messageContext" />
+    <result column="message_key" jdbcType="VARCHAR" property="messageKey" />
+    <result column="is_active" jdbcType="INTEGER" property="isActive" />
+    <association property="usrTable"
+                 resultMap="com.javen.dao.UsrTableDao.BaseResultMap"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    message_info_id, Message_tittle, message_date, Message_accout, Message_context, message_key, 
+    message_board_info.is_active
+  </sql>
+  <sql id="usr_table_colum">
+    ,usr_id, usr_account, usr_name, usr_password, usr_table.is_active
+  </sql>
+  <sql id="left_join_usr_table">
+    left join usr_table on message_board_info.message_accout = usr_table.usr_account
+  </sql>
+  <select id="selectByExample" parameterType="com.javen.model.MessageBoardInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    <include refid="usr_table_colum" />
+    from message_board_info
+    <include refid="left_join_usr_table" />
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message_board_info
+    where message_info_id = #{messageInfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from message_board_info
+    where message_info_id = #{messageInfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.javen.model.MessageBoardInfoExample">
+    delete from message_board_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="message_info_id" keyProperty="messageInfoId" parameterType="com.javen.model.MessageBoardInfo" useGeneratedKeys="true">
+    insert into message_board_info (Message_tittle, message_date, Message_accout, 
+      Message_context, message_key, is_active
+      )
+    values (#{messageTittle,jdbcType=VARCHAR}, #{messageDate,jdbcType=VARCHAR}, #{messageAccout,jdbcType=VARCHAR}, 
+      #{messageContext,jdbcType=VARCHAR}, #{messageKey,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="message_info_id" keyProperty="messageInfoId" parameterType="com.javen.model.MessageBoardInfo" useGeneratedKeys="true">
+    insert into message_board_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageTittle != null">
+        Message_tittle,
+      </if>
+      <if test="messageDate != null">
+        message_date,
+      </if>
+      <if test="messageAccout != null">
+        Message_accout,
+      </if>
+      <if test="messageContext != null">
+        Message_context,
+      </if>
+      <if test="messageKey != null">
+        message_key,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageTittle != null">
+        #{messageTittle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null">
+        #{messageDate,jdbcType=VARCHAR},
+      </if>
+      <if test="messageAccout != null">
+        #{messageAccout,jdbcType=VARCHAR},
+      </if>
+      <if test="messageContext != null">
+        #{messageContext,jdbcType=VARCHAR},
+      </if>
+      <if test="messageKey != null">
+        #{messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.javen.model.MessageBoardInfoExample" resultType="java.lang.Long">
+    select count(*) from message_board_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update message_board_info
+    <set>
+      <if test="record.messageInfoId != null">
+        message_info_id = #{record.messageInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageTittle != null">
+        Message_tittle = #{record.messageTittle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageDate != null">
+        message_date = #{record.messageDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageAccout != null">
+        Message_accout = #{record.messageAccout,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageContext != null">
+        Message_context = #{record.messageContext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageKey != null">
+        message_key = #{record.messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isActive != null">
+        is_active = #{record.isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update message_board_info
+    set message_info_id = #{record.messageInfoId,jdbcType=INTEGER},
+      Message_tittle = #{record.messageTittle,jdbcType=VARCHAR},
+      message_date = #{record.messageDate,jdbcType=VARCHAR},
+      Message_accout = #{record.messageAccout,jdbcType=VARCHAR},
+      Message_context = #{record.messageContext,jdbcType=VARCHAR},
+      message_key = #{record.messageKey,jdbcType=VARCHAR},
+      is_active = #{record.isActive,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.javen.model.MessageBoardInfo">
+    update message_board_info
+    <set>
+      <if test="messageTittle != null">
+        Message_tittle = #{messageTittle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null">
+        message_date = #{messageDate,jdbcType=VARCHAR},
+      </if>
+      <if test="messageAccout != null">
+        Message_accout = #{messageAccout,jdbcType=VARCHAR},
+      </if>
+      <if test="messageContext != null">
+        Message_context = #{messageContext,jdbcType=VARCHAR},
+      </if>
+      <if test="messageKey != null">
+        message_key = #{messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    where message_info_id = #{messageInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.javen.model.MessageBoardInfo">
+    update message_board_info
+    set Message_tittle = #{messageTittle,jdbcType=VARCHAR},
+      message_date = #{messageDate,jdbcType=VARCHAR},
+      Message_accout = #{messageAccout,jdbcType=VARCHAR},
+      Message_context = #{messageContext,jdbcType=VARCHAR},
+      message_key = #{messageKey,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=INTEGER}
+    where message_info_id = #{messageInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>
