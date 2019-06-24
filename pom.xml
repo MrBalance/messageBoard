@@ -78,6 +78,11 @@
       </dependency>
       <dependency>
           <groupId>org.springframework</groupId>
+          <artifactId>spring-aspects</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
           <artifactId>spring-context-support</artifactId>
           <version>${spring.version}</version>
       </dependency>
@@ -215,17 +220,8 @@
           <artifactId>spring-data-redis</artifactId>
           <version>1.6.2.RELEASE</version>
       </dependency>
-      <!-- aspect，AOP的maven坐标 -->
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-aop</artifactId>
-          <version>4.3.12.RELEASE</version>
-      </dependency>
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-aspects</artifactId>
-          <version>4.3.12.RELEASE</version>
-      </dependency>
+
+
   </dependencies>
   
   <build>
