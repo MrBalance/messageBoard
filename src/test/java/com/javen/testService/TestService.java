@@ -22,7 +22,7 @@ import java.util.Map;
  * @Date: 2019-06-11 11:49
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml","classpath:spring-mvc.xml"})
+@ContextConfiguration(locations = {"classpath:/springXML/spring.xml"})
 public class TestService {
 
     @Autowired

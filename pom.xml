@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.Mrbanlace</groupId>
-  <artifactId>maven-ssm</artifactId>
+  <artifactId>messageBoard</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>maven-ssm Maven Webapp</name>
+  <name>留言板demo</name>
   <url>http://maven.apache.org</url>
-  
+
   <properties>
       <!-- spring版本号 -->
       <spring.version>4.0.2.RELEASE</spring.version>
@@ -148,6 +148,11 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
           <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.16.10</version>
       </dependency>
       <!-- log end -->
       <!-- 映入JSON -->

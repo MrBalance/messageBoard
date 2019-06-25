@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:/springXML/spring.xml"})
   
 public class TestMyBatis {  
     private static Logger logger = Logger.getLogger(TestMyBatis.class);  

@@ -17,7 +17,7 @@ import java.util.Map;
  * @Date: 2019-06-11 13:57
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:/springXML/spring.xml"})
 public class TestUtil {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;

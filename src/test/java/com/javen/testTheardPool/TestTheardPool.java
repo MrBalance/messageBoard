@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
  * @Date: 2019-06-17 13:55
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:/springXML/spring.xml"})
 public class TestTheardPool {
     private static Logger log= LoggerFactory.getLogger(TestTheardPool.class);
     @Autowired

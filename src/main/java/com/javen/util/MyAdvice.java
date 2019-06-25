@@ -1,6 +1,8 @@
 package com.javen.util;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -19,15 +21,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
+@Slf4j
 public class MyAdvice {
+
+    JoinPoint jPoint;
+
     // 配置切点 及要传的参数
-    @Pointcut("execution(* com.javen.service.UsrTableService.islogin(..))")
-    public void pointCut() {}
+    @Pointcut("execution(* com.javen.service..*(..))")
+    public void pointCut() {
+    }
 
     // 配置连接点 方法开始执行时通知
     @Before("pointCut()")
-    public void beforeLog() {
-        System.out.println("开始执行前置通知  日志记录:");
+    public void beforeLog(JoinPoint joinPoint) {
+        String name = joinPoint.getTarget().getClass().getName();
+        System.out.println("开始执行前置通知  日志记录:" + name);
+        log.info("开始执行前置通知  日志记录:" + name);
     }
     //    方法执行完后通知
     @After("pointCut()")
