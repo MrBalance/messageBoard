@@ -15,8 +15,8 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:jdbc.properties</value>
-                <value>classpath:redis.properties</value>
+                <value>classpath:properties/jdbc.properties</value>
+                <value>classpath:properties/redis.properties</value>
             </list>
         </property>
     </bean>
@@ -78,7 +78,7 @@
     </bean>
 
     <!--引入其他spring配置文件-->
-    <import resource="classpath:spring-mvc.xml" />
-    <import resource="classpath:spring-mybatis.xml" />
-    <import resource="classpath:spring-redies.xml" />
+    <import resource="classpath:springXML/spring-mvc.xml" />
+    <import resource="classpath:springXML/spring-mybatis.xml" />
+    <import resource="classpath:springXML/spring-redies.xml" />
 </beans>
