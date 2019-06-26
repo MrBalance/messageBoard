@@ -3,7 +3,6 @@ package com.javen.testService;
 import com.javen.model.MessageBoardInfo;
 import com.javen.service.MessageBoardInfoService;
 import com.javen.service.UsrTableService;
-import com.javen.service.serviceImpl.UsrTableServiceImpl;
 import com.javen.util.PageBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class TestService {
 
     @Test
     public void isloginTest(){
-        Map<String,Object> map = new HashMap<String, Object>();
+        Map<String,Object> map = new HashMap<>();
         map.put("account","admin");
         map.put("password","123456");
         String loginInfo = usrTableService.islogin(map);
@@ -43,7 +43,7 @@ public class TestService {
 
     @Test
     public void leavingMessageTest(){
-        Map<String,Object> map = new HashMap<String, Object>();
+        Map<String,Object> map = new HashMap<>();
         map.put("tittle","testInsert1");
         map.put("key","java1");
         map.put("context","= - =1");
@@ -53,18 +53,21 @@ public class TestService {
 
     @Test
     public void multipleleavingMessageTest(){
-        Map<String,Object> map = new HashMap<String, Object>();
+        String result = null;
+        Map<String,Object> map = new HashMap<>();
         for(int i= 10;i < 20;i ++){
             map.put("tittle","testInsert"+i);
             map.put("key","java"+i);
             map.put("context","= - ="+i);
-            String result = messageBoardInfoService.leavingMessage(map);
+            result = messageBoardInfoService.leavingMessage(map);
         }
+        System.out.println(result);
+
     }
 
     @Test
     public void listMessageBoardInfoByPageTest(){
-        Map<String,Object> map = new HashMap<String, Object>();
+        Map<String,Object> map = new HashMap<>();
         map.put("pageNum",1);
         map.put("pageSize",5);
 //        map.put("tittle","testInsert");
@@ -80,12 +83,12 @@ public class TestService {
 
     @Test
     public void deleteMessagesTest(){
-        List<Integer> ids = null;
+        List<Integer> ids = new ArrayList<>();
         ids.add(61);
         ids.add(62);
         ids.add(63);
-//        String deleteInfo = (String) messageBoardInfoService.deleteMessages(ids);
-//        System.out.println(deleteInfo);
+        String deleteInfo = messageBoardInfoService.deleteMessages(ids);
+        System.out.println(deleteInfo);
     }
 
 

@@ -5,8 +5,7 @@ import com.javen.model.UsrTable;
 import com.javen.model.UsrTableExample;
 import com.javen.service.UsrTableService;
 import com.javen.util.MapBeanUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,8 @@ import java.util.Map;
  * @Date: 2019-06-11 11:10
  */
 @Service("usrTableService")
+@Slf4j
 public class UsrTableServiceImpl implements UsrTableService {
-
-    private static Logger log= LoggerFactory.getLogger(UsrTableServiceImpl.class);
 
     @Autowired
     private UsrTableDao usrTableDao;
@@ -52,7 +50,7 @@ public class UsrTableServiceImpl implements UsrTableService {
         UsrTableExample ux = new UsrTableExample();
         ux.createCriteria().andUsrAccountEqualTo(account);
         List<UsrTable> usrTables = usrTableDao.selectByExample(ux);
-        if(usrTables.isEmpty() || null == usrTables){
+        if(usrTables.isEmpty()){
             map.put("errorMessage","账号不存在");
             log.error("账号不存在");
             return false;
