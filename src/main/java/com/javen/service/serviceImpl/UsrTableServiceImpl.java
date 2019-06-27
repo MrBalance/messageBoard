@@ -4,6 +4,7 @@ import com.javen.dao.UsrTableDao;
 import com.javen.model.UsrTable;
 import com.javen.model.UsrTableExample;
 import com.javen.service.UsrTableService;
+import com.javen.util.LogFormat;
 import com.javen.util.MapBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class UsrTableServiceImpl implements UsrTableService {
     public String islogin(Map<String, Object> map) {
         if(checkLogin(map)){
             redisTemplate.opsForHash().putAll("loginInfo", map);
-            log.info("成功登录");
+            LogFormat.info("成功登录");
         }
         return (String) map.get("errorMessage");
     }
