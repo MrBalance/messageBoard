@@ -13,13 +13,14 @@ public class MapBeanUtil {
     /**
      * 利用反射将Map<String, Object>集合封装成bean对象
      *
-     * @param map
-     * @param clazz
-     * @return
+     * @param: map
+     * @param: clazz
+     * @return:
      */
+    @SuppressWarnings("unchecked")
     public static <T> T mapToBean(Map<String, Object> map, Class<?> clazz) throws Exception {
         Object obj = clazz.newInstance();
-        if (map != null && !map.isEmpty() && map.size() > 0) {
+        if (map != null && !map.isEmpty()) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 String propertyName = entry.getKey(); 	// 属性名
                 Object value = entry.getValue();		// 属性值
@@ -43,13 +44,14 @@ public class MapBeanUtil {
     /**
      * 利用反射将Map<Object, Object>集合封装成bean对象
      *
-     * @param map
-     * @param clazz
-     * @return
+     * @param: map
+     * @param: clazz
+     * @return:
      */
+    @SuppressWarnings("unchecked")
     public static <T> T map2Bean(Map<Object, Object> map, Class<?> clazz) throws Exception {
         Object obj = clazz.newInstance();
-        if (map != null && !map.isEmpty() && map.size() > 0) {
+        if (map != null && !map.isEmpty()) {
             for (Map.Entry<Object, Object> entry : map.entrySet()) {
                 String propertyName = (String) entry.getKey(); 	// 属性名
                 Object value = entry.getValue();		// 属性值
@@ -72,9 +74,9 @@ public class MapBeanUtil {
 
     /**
      * 根据给定对象类匹配对象中的特定字段
-     * @param clazz
-     * @param fieldName
-     * @return
+     * @param: clazz
+     * @param: fieldName
+     * @return:
      */
     private static Field getClassField(Class<?> clazz, String fieldName) {
         if (Object.class.getName().equals(clazz.getName())) {
@@ -95,12 +97,12 @@ public class MapBeanUtil {
 
     /**
      * 将map的value值转为实体类中字段类型匹配的方法
-     * @param value
-     * @param fieldTypeClass
-     * @return
+     * @param: value
+     * @param: fieldTypeClass
+     * @return:
      */
     private static Object convertValType(Object value, Class<?> fieldTypeClass) {
-        Object retVal = null;
+        Object retVal;
 
         if (Long.class.getName().equals(fieldTypeClass.getName())
                 || long.class.getName().equals(fieldTypeClass.getName())) {
@@ -122,30 +124,28 @@ public class MapBeanUtil {
 
     /**
      * 对象转map
-     * @param obj
-     * @return
+     * @param: obj
+     * @return:
      */
     public static Map<String, Object> objToMap(Object obj) {
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         Field[] fields = obj.getClass().getDeclaredFields();	// 获取f对象对应类中的所有属性域
-        for (int i = 0, len = fields.length; i < len; i++) {
-            String varName = fields[i].getName();
-            if("serialVersionUID".equals(varName)){
+        for (Field field : fields) {
+            String varName = field.getName();
+            if ("serialVersionUID".equals(varName)) {
                 continue;
             }
 //            varName = varName.toLowerCase();					// 将key置为小写，默认为对象的属性
             try {
-                boolean accessFlag = fields[i].isAccessible();	// 获取原来的访问控制权限
-                fields[i].setAccessible(true);					// 修改访问控制权限
-                Object o = fields[i].get(obj);					// 获取在对象f中属性fields[i]对应的对象中的变量
-                if (o != null){
+                boolean accessFlag = field.isAccessible();    // 获取原来的访问控制权限
+                field.setAccessible(true);                    // 修改访问控制权限
+                Object o = field.get(obj);                    // 获取在对象f中属性fields[i]对应的对象中的变量
+                if (o != null) {
                     map.put(varName, o.toString());
                 }
-                fields[i].setAccessible(accessFlag);			// 恢复访问控制权限
-            } catch (IllegalArgumentException ex) {
-                ex.printStackTrace();
-            } catch (IllegalAccessException ex) {
+                field.setAccessible(accessFlag);            // 恢复访问控制权限
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
                 ex.printStackTrace();
             }
         }
