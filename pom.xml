@@ -14,7 +14,7 @@
       <!-- mybatis版本号 -->
       <mybatis.version>3.2.6</mybatis.version>
       <!-- json包的版本 -->
-      <json.version>2.4.2</json.version>
+      <json.version>2.11.0</json.version>
       <jsoncore.version>1.9.13</jsoncore.version>
       <!-- log4j日志文件管理包版本 -->
       <slf4j.version>1.7.7</slf4j.version>
