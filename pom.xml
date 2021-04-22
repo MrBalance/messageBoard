@@ -12,7 +12,7 @@
       <!-- spring版本号 -->
       <spring.version>4.0.2.RELEASE</spring.version>
       <!-- mybatis版本号 -->
-      <mybatis.version>3.2.6</mybatis.version>
+      <mybatis.version>3.5.6</mybatis.version>
       <!-- json包的版本 -->
       <json.version>2.4.2</json.version>
       <jsoncore.version>1.9.13</jsoncore.version>
